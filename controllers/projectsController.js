@@ -1,5 +1,5 @@
 const Projects = require('../models/Projects')
-
+const Task = require('../models/Task')
 exports.projectsHome = async (req, res) => {
   let projects = await Projects.findAll().catch(err => {
     console.log(err)
@@ -58,10 +58,13 @@ exports.projectGetOne = async (req, res, next) => {
 
   if (!project) return next()
 
+  const tasks = await Task.findAll({where: {projectId: project.id}, includes: [{model: Projects}]})
+  console.log(tasks)
   res.render('task', {
     pageName: 'project tasks',
     project,
-    projects
+    projects,
+    tasks
   })
 }
 
