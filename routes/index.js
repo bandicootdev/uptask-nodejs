@@ -11,6 +11,7 @@ const {
   deleteProject
 } = require('../controllers/projectsController');
 
+const {crateTask} = require('../controllers/taskController')
 module.exports = () => {
   router.get('/', projectsHome);
   router.get('/new-project', formProjects)
@@ -24,7 +25,8 @@ module.exports = () => {
     body('name').not().isEmpty().trim().escape(),
     updateProject
   )
-  router.delete('/projects/:url',deleteProject)
+  router.delete('/projects/:url', deleteProject)
+  router.post('/projects/:url', crateTask)
 
   return router;
 }

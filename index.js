@@ -6,6 +6,7 @@ const routes = require('./routes');
 const db = require('./config/db')
 const helpers = require('./helpers')
 require('./models/Projects')
+require('./models/Task')
 
 db.sync()
   .then(() => console.log('db is connect'))
