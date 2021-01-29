@@ -105,3 +105,14 @@ exports.updateProject = async (req, res) => {
     res.redirect('/')
   }
 }
+
+exports.deleteProject = async (req, res, next) => {
+  const {url} = req.params;
+  let project = await Projects.destroy({where: {url}}).catch(err => {
+    throw err
+  })
+
+  if (!project) next();
+
+  res.status(200).send('Project Deleted')
+}

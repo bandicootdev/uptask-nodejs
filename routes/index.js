@@ -7,7 +7,8 @@ const {
   newProject,
   projectGetOne,
   editProject,
-  updateProject
+  updateProject,
+  deleteProject
 } = require('../controllers/projectsController');
 
 module.exports = () => {
@@ -23,6 +24,7 @@ module.exports = () => {
     body('name').not().isEmpty().trim().escape(),
     updateProject
   )
+  router.delete('/projects/:url',deleteProject)
 
   return router;
 }
