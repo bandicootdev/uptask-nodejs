@@ -1,7 +1,14 @@
 const {Router} = require('express')
 const router = Router();
 const {body} = require('express-validator/check');
-const {projectsHome, formProjects, newProject,projectGetOne} = require('../controllers/projectsController');
+const {
+  projectsHome,
+  formProjects,
+  newProject,
+  projectGetOne,
+  editProject,
+  updateProject
+} = require('../controllers/projectsController');
 
 module.exports = () => {
   router.get('/', projectsHome);
@@ -10,6 +17,12 @@ module.exports = () => {
     body('name').not().isEmpty().trim().escape(),
     newProject
   )
-  router.get('/projects/:url',projectGetOne)
+  router.get('/projects/:url', projectGetOne)
+  router.get('/projects/edit/:id', editProject)
+  router.post('/new-project/:id',
+    body('name').not().isEmpty().trim().escape(),
+    updateProject
+  )
+
   return router;
 }

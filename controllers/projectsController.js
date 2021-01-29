@@ -48,7 +48,6 @@ exports.projectGetOne = async (req, res, next) => {
   let projects = await Projects.findAll().catch(err => {
     console.log(err)
   })
-
   const project = await Projects.findOne({
     where: {
       url: req.params.url
@@ -59,9 +58,50 @@ exports.projectGetOne = async (req, res, next) => {
 
   if (!project) return next()
 
-   res.render('task', {
+  res.render('task', {
     pageName: 'project tasks',
     project,
     projects
   })
+}
+
+exports.editProject = async (req, res) => {
+  const projectsPromise = Projects.findAll();
+  const projectPromise = Projects.findByPk(req.params.id);
+
+  const [projects, project] = await Promise.all([projectsPromise, projectPromise])
+    .catch(err => console.log(err))
+
+  res.render('newProject', {
+    namePage: 'Edit Project',
+    project,
+    projects
+  })
+}
+
+exports.updateProject = async (req, res) => {
+  console.log(req.params.id)
+  let projects = await Projects.findAll().catch(err => {
+    console.log(err)
+  })
+  let {name} = req.body;
+  let errors = []
+  if (!name) {
+    errors.push({'message': 'add the task name'});
+  }
+
+  if (errors.length > 0) {
+    res.render('newProject', {
+      pageName: 'New Project',
+      errors,
+      projects
+    })
+  } else {
+    await Projects.update(
+      {name},
+      {where: {id: req.params.id}}).catch(err => {
+      console.log(err)
+    })
+    res.redirect('/')
+  }
 }
