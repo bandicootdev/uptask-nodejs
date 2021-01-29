@@ -1,3 +1,5 @@
+const Projects = require('../models/Projects')
+
 exports.projectsHome = (req, res) => {
   res.render('index', {
     title: "Projects"
@@ -10,7 +12,7 @@ exports.formProjects = (req, res) => {
   })
 }
 
-exports.newProject = (req, res) => {
+exports.newProject = async (req, res) => {
   let {name} = req.body;
   let errors = []
   if (!name) {
@@ -22,6 +24,11 @@ exports.newProject = (req, res) => {
       pageName: 'New Project',
       errors
     })
+  } else {
+    await Projects.create({name}).catch(err => {
+      console.log(err)
+    })
+    return res.redirect('/')
   }
 
 }
