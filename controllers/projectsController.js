@@ -1,18 +1,29 @@
 const Projects = require('../models/Projects')
 
-exports.projectsHome = (req, res) => {
+exports.projectsHome = async (req, res) => {
+  let projects = await Projects.findAll().catch(err => {
+    console.log(err)
+  })
   res.render('index', {
-    title: "Projects"
+    title: "Projects",
+    projects
   })
 }
 
-exports.formProjects = (req, res) => {
+exports.formProjects = async (req, res) => {
+  let projects = await Projects.findAll().catch(err => {
+    console.log(err)
+  })
   res.render('newProject', {
-    pageName: 'New Project'
+    pageName: 'New Project',
+    projects
   })
 }
 
 exports.newProject = async (req, res) => {
+  let projects = await Projects.findAll().catch(err => {
+    console.log(err)
+  })
   let {name} = req.body;
   let errors = []
   if (!name) {
@@ -22,7 +33,8 @@ exports.newProject = async (req, res) => {
   if (errors.length > 0) {
     res.render('newProject', {
       pageName: 'New Project',
-      errors
+      errors,
+      projects
     })
   } else {
     await Projects.create({name}).catch(err => {
@@ -30,5 +42,26 @@ exports.newProject = async (req, res) => {
     })
     return res.redirect('/')
   }
+}
 
+exports.projectGetOne = async (req, res, next) => {
+  let projects = await Projects.findAll().catch(err => {
+    console.log(err)
+  })
+
+  const project = await Projects.findOne({
+    where: {
+      url: req.params.url
+    }
+  }).catch(err => {
+    console.log(err)
+  })
+
+  if (!project) return next()
+
+   res.render('task', {
+    pageName: 'project tasks',
+    project,
+    projects
+  })
 }

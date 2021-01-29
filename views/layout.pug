@@ -19,17 +19,14 @@ html(lang="en")
                         span +
                 .panel.lista-proyectos
                     ul#proyectos.proyectos
-                        h2 Projects
-                        li
-                            a(href="#") virtual store design
-                        li
-                            a(href="#") virtual store design
-                        li
-                            a(href="#") virtual store design
+                        if(projects.length)
+                          each project in projects
+                              li
+                                  a(href=`/projects/${project.url}`)=project.name
 
             block contenido
 
-
+            //pre=varDump(projects)
 
 
 

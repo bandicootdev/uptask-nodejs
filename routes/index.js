@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router();
 const {body} = require('express-validator/check');
-const {projectsHome, formProjects, newProject} = require('../controllers/projectsController');
+const {projectsHome, formProjects, newProject,projectGetOne} = require('../controllers/projectsController');
 
 module.exports = () => {
   router.get('/', projectsHome);
@@ -10,6 +10,6 @@ module.exports = () => {
     body('name').not().isEmpty().trim().escape(),
     newProject
   )
-
+  router.get('/projects/:url',projectGetOne)
   return router;
 }
