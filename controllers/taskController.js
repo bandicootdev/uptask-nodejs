@@ -30,3 +30,12 @@ exports.editTask = async (req, res, next) => {
 
   res.status(200).send('updated task')
 }
+
+exports.deleteTask = async (req, res, next) => {
+  const {id} = req.params;
+  const task = await Task.destroy({where: {id}}).catch(err => {
+    console.log(err)
+  })
+  if (!task) next();
+  res.status(200).send('Deleted Task')
+}
