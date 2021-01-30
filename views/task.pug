@@ -7,12 +7,15 @@ block contenido
         form.agregar-tarea(action=`/projects/${project.url}` method='POST')
             .campo
                 label(for="name") Task:
-                input.nombre-tarea(type="test" name="name" placeholder="Task Name")
+                input.nombre-tarea(type="text" name="name" placeholder="Task Name")
             .campo.enviar
                 input.boton.nueva-tarea(type="submit" value="ADD")
 
         //pre=varDump(tasks)
-
+        .avance
+            h2 Project progress:
+            #barra-avance.barra-avance
+                #porcentaje.porcentaje
         .listado-pendientes
             ul
                 if tasks.length
@@ -28,6 +31,8 @@ block contenido
                               .fas.fa-trash
                 else
                     p there are no tasks in this project
+
+
         .contenedor-acciones
             a(href=`/projects/edit/${project.id}`).boton Edit Project
             button#eliminar-proyecto(data-project-url=project.url type="botton" class="boton eliminar") Delete Project
