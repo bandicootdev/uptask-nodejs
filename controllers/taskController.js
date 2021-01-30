@@ -16,3 +16,17 @@ exports.crateTask = async (req, res, next) => {
 
   res.redirect(`/projects/${url}`)
 }
+
+exports.editTask = async (req, res, next) => {
+  const {id} = req.params;
+  const task = await Task.findByPk(id).catch(err => {
+    console.log(err)
+  })
+  await task.update({state: !task.state}).catch(err => {
+    console.log(err)
+  })
+
+  if (!task) next();
+
+  res.status(200).send('updated task')
+}
