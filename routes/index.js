@@ -12,6 +12,7 @@ const {
 } = require('../controllers/projectsController');
 
 const {crateTask, editTask, deleteTask} = require('../controllers/taskController')
+const {createAccount,newCreateAccount} = require('../controllers/usersControllers')
 module.exports = () => {
   router.get('/', projectsHome);
   router.get('/new-project', formProjects)
@@ -29,5 +30,7 @@ module.exports = () => {
   router.post('/projects/:url', crateTask)
   router.patch('/task/:id', editTask)
   router.delete('/task/:id', deleteTask)
+  router.get('/create-account', createAccount)
+  router.post('/create-account', newCreateAccount)
   return router;
 }

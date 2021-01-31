@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 html(lang="en")
     head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width,initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        link(rel="stylesheet", href="/css/normalize.css")
-        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css")
-
-        link(rel="stylesheet", href="/css/app.css")
-        title= title
+        include partials/header
     body
         header.barra
             h1 UpTask-Project manager
@@ -28,8 +21,8 @@ html(lang="en")
 
             block contenido
 
-            //pre=varDump(projects)
-        script(src="/dist/bundle.js")
+            pre=varDump(projects)
+    script(src="/dist/bundle.js")
 
 
             
