@@ -5,10 +5,19 @@ exports.createAccount = (req, res) => {
   })
 }
 
-exports.newCreateAccount = (req, res, next) => {
-  const {email, password} = req.body;
-  User.create({email, password})
-    .then(() => {
-      res.redirect('/login')
+exports.newCreateAccount = async (req, res, next) => {
+  try {
+    const {email, password} = req.body;
+    await User.create({email, password}).catch(err => {
+      throw err
     })
+    res.redirect('/login')
+  } catch (err) {
+    req.flash('error', err.errors.map(err => err.message))
+    res.render('createAccount', {
+      messages: req.flash(),
+      pageName: 'Create an Uptask account',
+      email:req.body.email
+    })
+  }
 }

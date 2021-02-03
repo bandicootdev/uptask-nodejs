@@ -16,13 +16,13 @@ const User = db.define('users', {
       isEmail: {
         msg: 'add a valid email'
       },
-      unique: {
-        args: true,
-        msg: 'user already registered'
-      },
       notEmpty:{
         msg:'email cannot be empty'
       }
+    },
+    unique: {
+      args: true,
+      msg: 'user already registered'
     }
   },
   password: {
